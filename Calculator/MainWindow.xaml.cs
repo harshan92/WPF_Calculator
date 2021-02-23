@@ -21,6 +21,8 @@ namespace Calculator
     public partial class MainWindow : Window
     {
         double lastNumber, result;
+        SelectedOperator selectedOperator;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -33,7 +35,26 @@ namespace Calculator
 
         private void EqualButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            double newNumber;
+
+            if (double.TryParse(resultLabel.Content.ToString(), out lastNumber))
+            {
+                switch (selectedOperator)
+                {
+                    case SelectedOperator.Addition:
+                        result = SimpleMath.Add(lastNumber, lastNumber);
+                        break;
+                    case SelectedOperator.Subtraction:
+                        result = SimpleMath.Subtraction(lastNumber, lastNumber);
+                        break;
+                    case SelectedOperator.Multiplication:
+                        result = SimpleMath.Multiply(lastNumber, lastNumber);
+                        break;
+                    case SelectedOperator.Divition:
+                        result = SimpleMath.Divition(lastNumber, lastNumber);
+                        break;
+                }
+            }
         }
 
         private void OperarionButton_Click(object sender, RoutedEventArgs e)
@@ -130,6 +151,37 @@ namespace Calculator
             else
             {
                 resultLabel.Content = $"{resultLabel.Content}7";
+            }
+        }
+
+        public enum SelectedOperator
+        {
+            Addition,
+            Subtraction,
+            Multiplication,
+            Divition
+        }
+
+        public class SimpleMath
+        {
+            public static double Add(double n1, double n2)
+            {
+                return n1 + n2;
+            }
+
+            public static double Subtraction(double n1, double n2)
+            {
+                return n1 - n2;
+            }
+
+            public static double Multiply(double n1, double n2)
+            {
+                return n1 * n2;
+            }
+
+            public static double Divition(double n1, double n2)
+            {
+                return n1 / n2;
             }
         }
     }
